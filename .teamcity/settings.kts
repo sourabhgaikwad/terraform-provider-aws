@@ -133,9 +133,9 @@ object PullRequest : BuildType({
             }
         }
 
-        val notifierConnectionID = DslContext.getParameter("notifier_id", "")
+        val notifierConnectionID = DslContext.getParameter("notifier.id", "")
         val notifier: Notifier? = if (notifierConnectionID != "") {
-            Notifier(notifierConnectionID, DslContext.getParameter("notifier_channel"))
+            Notifier(notifierConnectionID, DslContext.getParameter("notifier.destination"))
         } else {
             null
         }
@@ -174,9 +174,9 @@ object FullBuild : BuildType({
         showDependenciesChanges = true
     }
 
-    val notifierConnectionID = DslContext.getParameter("notifier_id", "")
+    val notifierConnectionID = DslContext.getParameter("notifier.id", "")
     val notifier: Notifier? = if (notifierConnectionID != "") {
-        Notifier(notifierConnectionID, DslContext.getParameter("notifier_channel"))
+        Notifier(notifierConnectionID, DslContext.getParameter("notifier.destination"))
     } else {
         null
     }
@@ -297,9 +297,9 @@ object SetUp : BuildType({
             testFormat = "json"
         }
 
-        val notifierConnectionID = DslContext.getParameter("notifier_id", "")
+        val notifierConnectionID = DslContext.getParameter("notifier.id", "")
         val notifier: Notifier? = if (notifierConnectionID != "") {
-            Notifier(notifierConnectionID, DslContext.getParameter("notifier_channel"))
+            Notifier(notifierConnectionID, DslContext.getParameter("notifier.destination"))
         } else {
             null
         }
@@ -330,9 +330,9 @@ object Services : Project({
 
     name = "Services"
 
-    val notifierConnectionID = DslContext.getParameter("notifier_id", "")
+    val notifierConnectionID = DslContext.getParameter("notifier.id", "")
     val notifier: Notifier? = if (notifierConnectionID != "") {
-        Notifier(notifierConnectionID, DslContext.getParameter("notifier_channel"))
+        Notifier(notifierConnectionID, DslContext.getParameter("notifier.destination"))
     } else {
         null
     }
@@ -427,9 +427,9 @@ object Sweeper : BuildType({
             param("locks-param", "${DslContext.getParameter("aws_account.lock_id")} writeLock")
         }
 
-        val notifierConnectionID = DslContext.getParameter("notifier_id", "")
+        val notifierConnectionID = DslContext.getParameter("notifier.id", "")
         val notifier: Notifier? = if (notifierConnectionID != "") {
-            Notifier(notifierConnectionID, DslContext.getParameter("notifier_channel"))
+            Notifier(notifierConnectionID, DslContext.getParameter("notifier.destination"))
         } else {
             null
         }
