@@ -116,7 +116,11 @@ object PullRequest : BuildType({
         }
         script {
             name = "Run Tests"
-            scriptContent = File("./scripts/pullrequest_tests/tests.sh").readText()
+            scriptContent = if (accTestRoleARN != "") {
+                File("./scripts/pullrequest_tests/tests_role.sh").readText()
+            } else {
+                File("./scripts/pullrequest_tests/tests.sh").readText()
+            }
         }
     }
 
