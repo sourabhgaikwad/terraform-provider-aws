@@ -277,6 +277,7 @@ object SetUp : BuildType({
         cleanCheckout = true
     }
 
+    val accTestRoleARN = DslContext.getParameter("aws_account.role_arn", "")
     steps {
         script {
             name = "Setup GOENV"
@@ -288,7 +289,11 @@ object SetUp : BuildType({
         }
         script {
             name = "Run provider acceptance tests"
-            scriptContent = File("./scripts/provider_tests/acceptance_tests.sh").readText()
+            scriptContent = if (accTestRoleARN != "") {
+                File("./scripts/provider_tests/acceptance_tests_role.sh").readText()
+            } else {
+                File("./scripts/provider_tests/acceptance_tests.sh").readText()
+            }
         }
         script {
             name = "Pre-Sweeper"

@@ -50,6 +50,7 @@ class Service(name: String, spec: ServiceSpec) {
                 }
             }
 
+            val accTestRoleARN = DslContext.getParameter("aws_account.role_arn", "")
             val serviceDir = "./internal/service/$packageName"
             steps {
                 script {
@@ -69,7 +70,11 @@ class Service(name: String, spec: ServiceSpec) {
                 script {
                     name = "Run Acceptance Tests"
                     workingDir = serviceDir
-                    scriptContent = File("./scripts/service_tests/acceptance_tests.sh").readText()
+                    scriptContent = if (accTestRoleARN != "") {
+                        File("./scripts/service_tests/acceptance_tests_role.sh").readText()
+                    } else {
+                        File("./scripts/service_tests/acceptance_tests.sh").readText()
+                    }
                 }
             }
 
